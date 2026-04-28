@@ -14,12 +14,14 @@ export async function apiRegister(
   email: string,
   password: string,
   confirmPassword: string,
+  dateOfBirth: string,
 ): Promise<RegisterResponse> {
   const res = await apiClient.post<ApiResponse<RegisterResponse>>("/auth/register", {
     fullName,
     email,
     password,
     confirmPassword,
+    dateOfBirth,
   });
   if (!res.data.success || !res.data.data) {
     throw new Error(res.data.error?.message ?? "Registration failed.");

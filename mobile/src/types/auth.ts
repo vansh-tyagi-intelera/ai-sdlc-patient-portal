@@ -35,6 +35,7 @@ export type RegisterResponse = {
   email: string;
   firstName: string;
   lastName: string;
+  dateOfBirth: string;
   message: string;
 };
 

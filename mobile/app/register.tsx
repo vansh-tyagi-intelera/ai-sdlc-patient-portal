@@ -4,7 +4,9 @@ import { useState } from "react";
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { DatePickerField } from "../src/components/forms/date-picker-field";
 import { TextField } from "../src/components/forms/text-field";
+import { formatDobForApi } from "../src/features/auth/dob-validation";
 import { apiRegister } from "../src/services/auth-api";
 import { colors, radii, spacing, typography } from "../src/theme";
 
@@ -15,6 +17,7 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [dob, setDob] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,11 +46,15 @@ export default function RegisterScreen() {
       setError("Passwords do not match.");
       return;
     }
+    if (!dob) {
+      setError("Date of birth is required.");
+      return;
+    }
     setError(null);
     setLoading(true);
     try {
       const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
-      await apiRegister(fullName, email.trim(), password, confirmPassword);
+      await apiRegister(fullName, email.trim(), password, confirmPassword, formatDobForApi(dob));
       router.replace("/login");
     } catch (err: any) {
       setError(err?.message ?? "Registration failed. Please try again.");
@@ -109,6 +116,14 @@ export default function RegisterScreen() {
               />
             </View>
           </View>
+
+          <DatePickerField
+            label="Date of Birth"
+            maximumDate={new Date()}
+            minimumDate={(() => { const d = new Date(); d.setFullYear(d.getFullYear() - 200); return d; })()}
+            onChange={(date) => { setDob(date); setError(null); }}
+            value={dob}
+          />
 
           <TextField
             autoCapitalize="none"
