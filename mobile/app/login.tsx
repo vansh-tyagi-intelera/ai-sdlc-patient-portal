@@ -34,6 +34,7 @@ export default function LoginScreen() {
         lastName: data.user.lastName,
         displayName: `${data.user.firstName} ${data.user.lastName}`.trim(),
         role: data.user.role,
+        dateOfBirth: data.user.dateOfBirth,
       };
       signIn(account, data.accessToken, data.refreshToken);
       router.replace("/home");

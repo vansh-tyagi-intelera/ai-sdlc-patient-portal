@@ -29,8 +29,18 @@
 - [x] Feature meets measurable outcomes defined in Success Criteria
 - [x] No implementation details leak into specification
 
+## Profile Page Requirements
+
+- [x] DOB displayed read-only on Profile screen in personal info card (MM-DD-YYYY format)
+- [x] DOB shown as locked non-editable field on Profile Edit screen
+- [x] Locked DOB field has hint text explaining it cannot be changed
+- [x] `UserAccount` type extended with optional `dateOfBirth` field
+- [x] `LoginResponse["user"]` extended with optional `dateOfBirth` field
+- [x] `login.tsx` and `session-expired.tsx` map `dateOfBirth` when constructing `UserAccount`
+
 ## Notes
 
 - Spec derived from Jira bug SCRUM-47 (Patient Portal project)
 - "Disable past dates" from original ticket interpreted as "disable future dates" — documented as assumption in spec
+- Profile page DOB is read-only: DOB is PHI and cannot be changed post-registration
 - All checklist items pass; spec is ready for `/speckit.plan`

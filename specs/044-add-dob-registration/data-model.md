@@ -48,8 +48,19 @@ export type RegisterResponse = {
   email: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: string;  // NEW — ISO 8601 (YYYY-MM-DD)
+  dateOfBirth: string;  // NEW — MM-DD-YYYY
   message: string;
+};
+
+// Extend UserAccount (used by auth store and profile screens)
+export type UserAccount = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  role: string;
+  dateOfBirth?: string;  // NEW — MM-DD-YYYY; optional until all login responses include it
 };
 ```
 
@@ -62,7 +73,7 @@ export async function apiRegister(
   email: string,
   password: string,
   confirmPassword: string,
-  dateOfBirth: string,  // NEW — ISO 8601 (YYYY-MM-DD)
+  dateOfBirth: string,  // NEW — MM-DD-YYYY
 ): Promise<RegisterResponse>
 ```
 

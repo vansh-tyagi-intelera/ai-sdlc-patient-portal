@@ -5,6 +5,7 @@ export type UserAccount = {
   lastName: string;
   displayName: string;
   role: string;
+  dateOfBirth?: string;
 };
 
 export type AuthState = {
@@ -27,6 +28,7 @@ export type LoginResponse = {
     lastName: string;
     role: string;
     isActive: boolean;
+    dateOfBirth?: string;
   };
 };
 
@@ -37,6 +39,12 @@ export type RegisterResponse = {
   lastName: string;
   dateOfBirth: string;
   message: string;
+};
+
+export type DemoAccount = {
+  displayName: string;
+  email: string;
+  password: string;
 };
 
 export type ApiResponse<T> = {

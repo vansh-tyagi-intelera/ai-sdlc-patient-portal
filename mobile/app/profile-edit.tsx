@@ -91,6 +91,16 @@ export default function ProfileEditScreen() {
             </View>
           </View>
 
+          {/* Locked DOB */}
+          <Text style={styles.fieldLabel}>Date of Birth</Text>
+          <View style={styles.lockedInput}>
+            <Text style={styles.lockedText} numberOfLines={1}>
+              {account?.dateOfBirth ?? "—"}
+            </Text>
+            <MaterialIcons color={colors.outlineVariant} name="lock" size={18} />
+          </View>
+          <Text style={styles.lockedHint}>Date of birth cannot be changed.</Text>
+
           {/* Locked email */}
           <Text style={styles.fieldLabel}>Email Address</Text>
           <View style={styles.lockedInput}>

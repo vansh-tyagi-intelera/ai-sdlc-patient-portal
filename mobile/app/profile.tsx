@@ -62,6 +62,8 @@ export default function ProfileScreen() {
           <Divider />
           <InfoRow label="Last Name" value={lastName} />
           <Divider />
+          <InfoRow label="Date of Birth" value={account.dateOfBirth ?? "—"} />
+          <Divider />
           <InfoRow label="Phone" value="+1 (555) 123-4567" />
           <Divider />
           <InfoRow label="Email" value={account.email} locked />

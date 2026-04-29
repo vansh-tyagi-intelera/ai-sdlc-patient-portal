@@ -1,4 +1,4 @@
-# Tasks: Add Date of Birth Field to User Registration
+# Tasks: Add Date of Birth Field to User Registration & Profile
 
 **Input**: Design documents from `/specs/044-add-dob-registration/`
 **Prerequisites**: plan.md ✅, spec.md ✅, research.md ✅, data-model.md ✅, contracts/ ✅, quickstart.md ✅
@@ -101,6 +101,29 @@
 - [ ] T022 Run `npm run lint` and `npm run typecheck` in `mobile/` — confirm zero errors and zero warnings above threshold — 3 pre-existing lint errors, 3 pre-existing type errors remain; zero new errors from DOB feature
 - [ ] T023 Hand off `specs/044-add-dob-registration/contracts/register-endpoint.md` to backend team — confirm Phase 1 backend change (nullable `dateOfBirth`) is scheduled before mobile ships
 - [ ] T024 Manually test on iOS Simulator and Android Emulator: calendar opens, valid date selects in MM-DD-YYYY, future dates greyed out, empty-DOB error appears and clears, form submits successfully with DOB in payload
+
+---
+
+## Phase 6: Profile Page — Display Date of Birth (Read-Only)
+
+**Purpose**: Surface the collected `dateOfBirth` on the Profile view screen and as a locked (non-editable) field on the Profile Edit screen, consistent with how email is treated.
+
+**Rationale**: DOB is PHI — once set at registration it cannot be changed. Profile shows it for patient awareness; Profile Edit displays it locked to prevent modification.
+
+### Tests for Phase 6 ⚠️ RED-GREEN-REFACTOR CYCLE
+
+- [X] T025 [T] [P] Write unit test in `tests/unit/mobile/app/profile.test.tsx`: verify "Date of Birth" label and formatted value (MM-DD-YYYY) appear in the personal info card when `account.dateOfBirth` is present
+- [X] T026 [T] [P] Write unit test in `tests/unit/mobile/app/profile-edit.test.tsx`: verify DOB field renders as locked (non-interactive), displays correct value, and shows hint text "Date of birth cannot be changed."
+
+### Implementation for Phase 6 (After tests written and confirmed failing)
+
+- [X] T027 Add `dateOfBirth?: string` to `UserAccount` and `LoginResponse["user"]` in `mobile/src/types/auth.ts`; also added missing `DemoAccount` type (fixes 2 pre-existing type errors)
+- [X] T028 Map `dateOfBirth` from `data.user.dateOfBirth` in `mobile/app/login.tsx` when building the `account` object passed to `signIn` (session-expired uses demo path, not affected)
+- [X] T029 Add `<InfoRow label="Date of Birth" value={account.dateOfBirth ?? "—"} />` to the personal info card in `mobile/app/profile.tsx` (after Last Name, before Phone)
+- [X] T030 Add DOB as a locked display field (non-editable, same treatment as email) to `mobile/app/profile-edit.tsx`, with hint "Date of birth cannot be changed."
+- [X] T031 Run `npm run typecheck` — zero new type errors; 1 pre-existing `session-expired.tsx` TS2554 remains (out of scope)
+
+**Checkpoint**: DOB visible on Profile screen; shown as locked field on Profile Edit screen; type-safe end-to-end.
 
 ---
 
